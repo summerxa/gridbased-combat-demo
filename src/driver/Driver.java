@@ -18,9 +18,10 @@ public class Driver {
 
             // read the next command
             input = reader.readCommand();
+            System.out.println("Read valid input, continuing to next step");
         } while (input.inputType != UserInput.InputType.QUIT);
 
         // TODO print out player stats?
-        System.out.println("Thank yew for playing");
+        System.out.println("Thank u for playing :)");
     }
 }

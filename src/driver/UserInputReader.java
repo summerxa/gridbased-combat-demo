@@ -35,8 +35,8 @@ public class UserInputReader {
                 case "q" -> InputType.BASIC_ATK;
                 case "w" -> InputType.MOVEMENT;
                 case "e" -> InputType.FORFEIT;
-                case "r" -> InputType.CHANGE_DEPLOY_STATE;
-                case "i" -> InputType.INFO;
+                case "r" -> InputType.ULTIMATE;
+//                case "i" -> InputType.INFO;
                 case "" -> InputType.CONTINUE;
                 default -> InputType.INVALID;
             };

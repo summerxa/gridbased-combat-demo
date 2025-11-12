@@ -7,8 +7,8 @@ import driver.UserInput.InputType;
  */
 public class BattlefieldController {
     public enum BattlefieldState {
-        ALLY_INFO,
-        ENEMY_INFO,
+//        ALLY_INFO,
+//        ENEMY_INFO,
         ALLY_TURN,
         ENEMY_TURN
     }
@@ -24,11 +24,13 @@ public class BattlefieldController {
      * Assumes this is for user-provided input (i.e. SETUP is an invalid command type)
      */
     public boolean isValidCommandType(InputType input) {
-        switch (input) {
-            case InputType.SKILL1, InputType.SKILL2:
-                // TODO check if on cooldown
-                return currentState == BattlefieldState.ALLY_TURN;
+        if (input == InputType.INVALID) {
+            return false;
         }
-        return false;
+        if (currentState == BattlefieldState.ENEMY_TURN) {
+            return input == InputType.CONTINUE;
+        }
+        // TODO check if command is valid at this turn
+        return true;
     }
 }
