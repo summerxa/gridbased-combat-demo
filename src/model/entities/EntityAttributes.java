@@ -4,6 +4,7 @@ public class EntityAttributes {
     public static final int MAX_MP = 50;
 
     public String name;
+    public char printRep;
     public int maxHP;
     public int hp;
     public int atk;
@@ -15,8 +16,9 @@ public class EntityAttributes {
     /**
      * Create a regular entity
      */
-    public EntityAttributes(String name, int maxHp, int hp, int atk, int def, int mp) {
+    public EntityAttributes(String name, char printRep, int maxHp, int hp, int atk, int def, int mp) {
         this.name = name;
+        this.printRep = printRep;
         this.maxHP = maxHp;
         this.hp = hp;
         this.atk = atk;

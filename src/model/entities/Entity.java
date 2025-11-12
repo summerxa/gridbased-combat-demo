@@ -1,6 +1,9 @@
 package model.entities;
 
+import model.gridmap.TileListener;
 import model.gridmap.TilePos;
+
+import java.util.ArrayList;
 
 public abstract class Entity {
     public final EntityAttributes baseAttributes;
@@ -36,4 +39,10 @@ public abstract class Entity {
     public void updateMP(int amount) {
         attributes.mp = Math.min(Math.max(attributes.mp + amount, -EntityAttributes.MAX_MP), EntityAttributes.MAX_MP);
     }
+
+    public String toString() {
+        return Character.toString(attributes.printRep);
+    }
+
+    public abstract void processEvent(TileListener.TileEvent event, ArrayList<Object> actor);
 }
