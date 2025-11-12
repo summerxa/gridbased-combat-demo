@@ -29,11 +29,11 @@ public class UserInputReader {
                 case "x" -> InputType.QUIT;
                 case "1" -> InputType.SKILL1;
                 case "2" -> InputType.SKILL2;
-                case "3" -> InputType.MP_AOE;
+                case "3" -> InputType.ULTIMATE;
                 case "q" -> InputType.BASIC_ATK;
                 case "w" -> InputType.MOVEMENT;
                 case "e" -> InputType.FORFEIT;
-                case "r" -> InputType.ULTIMATE;
+                case "r" -> InputType.MP_AOE;
 //                case "i" -> InputType.INFO;
                 case "" -> InputType.CONTINUE;
                 default -> InputType.INVALID;

@@ -10,6 +10,7 @@ public class EntityAttributes {
     public int atk;
     public int def;
     public int mp;
+    public int shield;
 
     public boolean isDamageable;
 
@@ -25,6 +26,8 @@ public class EntityAttributes {
         this.def = def;
         this.mp = mp;
         this.isDamageable = true;
+
+        this.shield = 0;
     }
 
     /**
