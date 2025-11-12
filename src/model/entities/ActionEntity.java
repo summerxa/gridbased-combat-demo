@@ -9,4 +9,6 @@ public abstract class ActionEntity extends Entity {
     protected ActionEntity(EntityAttributes baseAttributes) {
         super(baseAttributes);
     }
+
+    public abstract void act();
 }

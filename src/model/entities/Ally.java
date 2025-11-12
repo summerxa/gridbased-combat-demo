@@ -1,5 +1,6 @@
 package model.entities;
 
+import driver.UserInput;
 import model.gridmap.TilePos;
 
 /**

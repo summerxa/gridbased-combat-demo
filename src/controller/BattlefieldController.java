@@ -1,7 +1,13 @@
 package controller;
 
 import driver.UserInput.InputType;
+import model.entities.Ally;
+import model.entities.Enemy;
 import model.gridmap.Grid;
+import model.gridmap.TilePos;
+
+import java.util.ArrayList;
+import java.util.Map.Entry;
 
 /**
  * Controls the entities to perform actions in combat
@@ -19,6 +25,9 @@ public class BattlefieldController {
     BattlefieldState currentState = BattlefieldState.ALLY_TURN;
 
     public Grid battlefield = new Grid();
+
+    public ArrayList<Entry<Ally, TilePos>> allies = new ArrayList<>();
+    public ArrayList<Entry<Enemy, TilePos>> enemies = new ArrayList<>();
 
     /**
      * Creates a testing battlefield with Tutorial unit and 1 dummy enemy.
