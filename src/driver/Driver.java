@@ -7,11 +7,8 @@ import controller.BattlefieldController;
  */
 public class Driver {
     public static void main(String[] args) {
-
-        BattlefieldController battlefield = new BattlefieldController();
-
-        UserInputReader reader = new UserInputReader(battlefield);
-        UserInput input = new UserInput();
+        UserInputReader reader = new UserInputReader();
+        UserInput input;
 
         do {
             // TODO handle input (update battlefield, print changes, etc)

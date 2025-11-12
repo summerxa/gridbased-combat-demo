@@ -1,11 +1,14 @@
 package controller;
 
 import driver.UserInput.InputType;
+import model.gridmap.Grid;
 
 /**
  * Controls the entities to perform actions in combat
  */
 public class BattlefieldController {
+    public static BattlefieldController instance = new BattlefieldController();
+
     public enum BattlefieldState {
 //        ALLY_INFO,
 //        ENEMY_INFO,
@@ -13,10 +16,15 @@ public class BattlefieldController {
         ENEMY_TURN
     }
 
-    BattlefieldState currentState;
+    BattlefieldState currentState = BattlefieldState.ALLY_TURN;
 
-    public BattlefieldController() {
-        currentState = BattlefieldState.ALLY_TURN;
+    public Grid battlefield = new Grid();
+
+    /**
+     * Creates a testing battlefield with Tutorial unit and 1 dummy enemy.
+     */
+    public void initTutorialDummy() {
+//        battlefield.placeEntity
     }
 
     /**

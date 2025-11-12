@@ -10,11 +10,9 @@ import driver.UserInput.InputType;
  */
 public class UserInputReader {
     Scanner scanner;
-    BattlefieldController battlefield;
 
-    public UserInputReader(BattlefieldController battlefield) {
+    public UserInputReader() {
         scanner = new Scanner(System.in);
-        this.battlefield = battlefield;
     }
 
     public UserInput readCommand() {
@@ -40,7 +38,7 @@ public class UserInputReader {
                 case "" -> InputType.CONTINUE;
                 default -> InputType.INVALID;
             };
-        } while (!battlefield.isValidCommandType(input));
+        } while (!BattlefieldController.instance.isValidCommandType(input));
         return input;
     }
 }
