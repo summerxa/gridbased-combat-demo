@@ -1,8 +1,10 @@
 package model.entities;
 
 public class EntityAttributes {
+    public static final int MAX_MP = 50;
+
     public String name;
-    public int maxHp;
+    public int maxHP;
     public int hp;
     public int atk;
     public int def;
@@ -15,7 +17,7 @@ public class EntityAttributes {
      */
     public EntityAttributes(String name, int maxHp, int hp, int atk, int def, int mp) {
         this.name = name;
-        this.maxHp = maxHp;
+        this.maxHP = maxHp;
         this.hp = hp;
         this.atk = atk;
         this.def = def;
@@ -36,7 +38,7 @@ public class EntityAttributes {
      */
     public EntityAttributes(EntityAttributes other) {
         this.name = other.name;
-        this.maxHp = other.maxHp;
+        this.maxHP = other.maxHP;
         this.hp = other.hp;
         this.atk = other.atk;
         this.def = other.def;

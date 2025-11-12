@@ -29,4 +29,11 @@ public abstract class Entity {
     public void heal(int healAmount) {
         attributes.hp += healAmount;
     }
+
+    /**
+     * Update MP value but clamp it between -MAX_MP and +MAX_MP.
+     */
+    public void updateMP(int amount) {
+        attributes.mp = Math.min(Math.max(attributes.mp + amount, -EntityAttributes.MAX_MP), EntityAttributes.MAX_MP);
+    }
 }

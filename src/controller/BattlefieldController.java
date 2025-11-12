@@ -23,6 +23,7 @@ public class BattlefieldController {
     }
 
     BattlefieldState currentState = BattlefieldState.ALLY_TURN;
+    int currentActor = 0;
 
     public Grid battlefield = new Grid();
 
