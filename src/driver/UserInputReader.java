@@ -35,7 +35,6 @@ public class UserInputReader {
                 case "e" -> InputType.FORFEIT;
                 case "r" -> InputType.MP_AOE;
 //                case "i" -> InputType.INFO;
-                case "" -> InputType.CONTINUE;
                 default -> InputType.INVALID;
             };
         } while (!BattlefieldController.instance.isValidCommandType(input));

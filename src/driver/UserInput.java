@@ -17,7 +17,6 @@ public class UserInput {
         MP_AOE,                  // either rally or panic
 //        INFO,                    // view info about a selected unit
         // ---
-        CONTINUE,                // goes to next time step; only available when battlefield not in ALLY_TURN state
         INVALID                  // input was invalid
     }
 

@@ -1,5 +1,7 @@
 package model.entities;
 
+import model.gridmap.TilePos;
+
 public class EntityAttributes {
     public static final int MAX_MP = 50;
 
@@ -14,10 +16,12 @@ public class EntityAttributes {
 
     public boolean isDamageable;
 
+    public TilePos pos;
+
     /**
      * Create a regular entity
      */
-    public EntityAttributes(String name, char printRep, int maxHp, int hp, int atk, int def, int mp) {
+    public EntityAttributes(String name, char printRep, int maxHp, int hp, int atk, int def, int mp, TilePos pos) {
         this.name = name;
         this.printRep = printRep;
         this.maxHP = maxHp;
@@ -25,8 +29,9 @@ public class EntityAttributes {
         this.atk = atk;
         this.def = def;
         this.mp = mp;
-        this.isDamageable = true;
+        this.pos = new TilePos(pos);
 
+        this.isDamageable = true;
         this.shield = 0;
     }
 

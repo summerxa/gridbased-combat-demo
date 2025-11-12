@@ -15,6 +15,11 @@ public class TilePos {
         this.col = col;
     }
 
+    public TilePos(TilePos pos) {
+        this.row = pos.row;
+        this.col = pos.col;
+    }
+
     public static boolean isInBounds(int row, int col) {
         return row >= 0 && row < 8 && col >= 0 && col < 8;
     }

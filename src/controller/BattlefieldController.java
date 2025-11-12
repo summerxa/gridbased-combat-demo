@@ -13,6 +13,7 @@ import java.util.Map.Entry;
  * Controls the entities to perform actions in combat
  */
 public class BattlefieldController {
+    // Singleton instance yay
     public static BattlefieldController instance = new BattlefieldController();
 
     public enum BattlefieldState {
@@ -25,16 +26,15 @@ public class BattlefieldController {
     BattlefieldState currentState = BattlefieldState.ALLY_TURN;
     int currentActor = 0;
 
-    public Grid battlefield = new Grid();
+    public Grid grid = new Grid();
 
-    public ArrayList<Entry<Ally, TilePos>> allies = new ArrayList<>();
-    public ArrayList<Entry<Enemy, TilePos>> enemies = new ArrayList<>();
+    public ArrayList<Ally> allies = new ArrayList<>();
+    public ArrayList<Enemy> enemies = new ArrayList<>();
 
     /**
      * Creates a testing battlefield with Tutorial unit and 1 dummy enemy.
      */
     public void initTutorialDummy() {
-//        battlefield.placeEntity
     }
 
     /**
@@ -42,13 +42,9 @@ public class BattlefieldController {
      * Assumes this is for user-provided input (i.e. SETUP is an invalid command type)
      */
     public boolean isValidCommandType(InputType input) {
-        if (input == InputType.INVALID) {
-            return false;
-        }
         if (currentState == BattlefieldState.ENEMY_TURN) {
-            return input == InputType.CONTINUE;
+            return true;
         }
-        // TODO check if command is valid at this turn
-        return true;
+        return allies.get(currentActor).isValidMove(input);
     }
 }
