@@ -49,8 +49,12 @@ public abstract class Entity {
         return Character.toString(attributes.gridRep);
     }
 
-    public abstract void onTurnStart();
-    public abstract void onTurnEnd();
+    // override if needed
+    public void onTurnStart() {
+        // TODO trigger status effects and decrement their timers
+    }
+    public void onTurnEnd() {
+    }
 
     public int computeOffense(int input) {
         // TODO add atk and other buffs

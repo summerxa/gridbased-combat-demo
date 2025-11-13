@@ -3,7 +3,7 @@ package driver;
 /**
  * Represents a command provided by the user.
  */
-public class UserInput {
+public final class UserInput {
     public enum InputType {
         SETUP,                   // set up battlefield
         QUIT,                    // quit app
@@ -18,15 +18,5 @@ public class UserInput {
 //        INFO,                    // view info about a selected unit
         // ---
         INVALID                  // input was invalid
-    }
-
-    InputType inputType;
-
-    public UserInput() {
-        this(InputType.SETUP);
-    }
-
-    public UserInput(InputType inputType) {
-        this.inputType = inputType;
     }
 }

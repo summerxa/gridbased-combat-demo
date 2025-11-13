@@ -22,6 +22,13 @@ public class TilePos {
         this.col = pos.col;
     }
 
+    /**
+     * Build a dummy "invalid"/out of bounds position.
+     */
+    public static TilePos outOfBounds() {
+        return new TilePos(-1, -1);
+    }
+
     public static boolean isInBounds(int row, int col) {
         return row >= 0 && row < 8 && col >= 0 && col < 8;
     }

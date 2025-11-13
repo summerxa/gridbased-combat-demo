@@ -4,7 +4,7 @@ package model.entities;
  * Represents an enemy.
  */
 public abstract class Enemy extends ActionEntity {
-    protected Enemy(EntityAttributes baseAttributes) {
+    public Enemy(EntityAttributes baseAttributes) {
         super(baseAttributes);
     }
 }

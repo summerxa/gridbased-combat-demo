@@ -2,6 +2,7 @@ package driver;
 
 import controller.BattlefieldController;
 import controller.LevelBuilder;
+import model.gridmap.TilePos;
 
 /**
  * Driver for gameplay loop
@@ -9,7 +10,7 @@ import controller.LevelBuilder;
 public class Driver {
     public static void main(String[] args) {
         UserInputReader reader = new UserInputReader();
-        UserInput input;
+        UserInput.InputType input;
 
         LevelBuilder.initTutorialDummy();
 
@@ -19,8 +20,10 @@ public class Driver {
 
             // read the next command
             input = reader.readCommand();
-            System.out.println("Read valid input, continuing to next step");
-        } while (input.inputType != UserInput.InputType.QUIT);
+            System.out.println("Received a valid input command");
+//            TilePos pos = reader.readCoords();
+//            System.out.println("Received a valid coordinate");
+        } while (input != UserInput.InputType.QUIT);
 
         // TODO print out player stats?
         System.out.println("Thank u for playing :)");

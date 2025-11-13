@@ -133,14 +133,11 @@ public abstract class Ally extends ActionEntity {
         processActionResult(move, results);
     }
 
-    public void onTurnStart() {
-        // TODO trigger status effects and decrement their timers
-    }
-
     public void onTurnEnd() {
         // decrement skill cooldowns
         for (int i = 0; i < 2; ++i)
             if (skillTimer[i] > 0)
                 --skillTimer[i];
+        super.onTurnEnd();
     }
 }

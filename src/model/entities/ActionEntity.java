@@ -28,8 +28,6 @@ public abstract class ActionEntity extends Entity {
 
     }
 
-    public abstract void performAndProcessAction(UserInput.InputType move, ArrayList<EntityActionResult> results);
-
     protected void processActionResult(UserInput.InputType action, ArrayList<EntityActionResult> results) {
 
     }
