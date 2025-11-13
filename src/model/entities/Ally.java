@@ -1,11 +1,11 @@
 package model.entities;
 
 import driver.UserInput.InputType;
+import model.Constants;
 import model.gridmap.TilePos;
-import model.gridmap.tileactions.TileAction;
+import model.gridmap.tileactions.AddMpTileAction;
 
 import java.util.ArrayList;
-import java.util.Map.Entry;
 
 /**
  * Represents a playable ally unit.
@@ -35,14 +35,29 @@ public abstract class Ally extends ActionEntity {
 
     // these methods don't *perform* the action
     // only return a list of which tiles will be affected by a skill use at the selected location "pos"
-    public abstract Entry<TilePos, TileAction> basicAtkAction(TilePos pos);
-    public abstract ArrayList<Entry<TilePos, TileAction>> skill1Action(TilePos pos);
-    public abstract ArrayList<Entry<TilePos, TileAction>> skill2Action(TilePos pos);
+    public abstract EntityActionResult basicAtkAction(TilePos pos);
+    public abstract EntityActionResult skill1Action(TilePos pos);
+    public abstract EntityActionResult skill2Action(TilePos pos);
 
-    public ArrayList<Entry<TilePos, TileAction>> ultimateAction(TilePos pos) {
+    public EntityActionResult ultimateAction(TilePos pos) {
         return (attributes.mp > 0) ? lifeUltAction(pos) : deathUltAction(pos);
     }
 
-    protected abstract ArrayList<Entry<TilePos, TileAction>> lifeUltAction(TilePos pos);
-    protected abstract ArrayList<Entry<TilePos, TileAction>> deathUltAction(TilePos pos);
+    protected abstract EntityActionResult lifeUltAction(TilePos pos);
+    protected abstract EntityActionResult deathUltAction(TilePos pos);
+
+    public EntityActionResult mpAOE() {
+        EntityActionResult result = new EntityActionResult();
+        int level = (int)Math.floor(Math.abs(attributes.mp) / 10.0);
+        if (level == 0) {
+            return result;
+        }
+        ArrayList<TilePos> aoe = TilePos.getDiamondAOE(attributes.pos, level, false);
+        int coeff = (attributes.mp < 0) ? -1 : 1;
+        for (TilePos pos : aoe) {
+            result.addAction(pos, new AddMpTileAction(
+                    coeff * level * Constants.ALLY_MP_AOE_PERLEVEL_MULTIPLIER));
+        }
+        return result;
+    }
 }

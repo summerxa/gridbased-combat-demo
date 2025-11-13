@@ -2,6 +2,7 @@ package model.entities;
 
 import model.gridmap.TileListener;
 import model.gridmap.TilePos;
+import util.MiscUtil;
 
 import java.util.ArrayList;
 
@@ -17,12 +18,10 @@ public abstract class Entity {
     /**
      * Take some amount of incoming damage
      * @param baseDamage base damage before DEF and other modifiers applied
-     * @return true if entity died, otherwise false
      */
-    public boolean takeDamage(int baseDamage) {
+    public void takeDamage(int baseDamage) {
         // TODO incorporate DEF
-        attributes.hp -= baseDamage;
-        return attributes.hp <= 0;
+        attributes.hp -= MiscUtil.awayFromZero(attributes.defenseMult * baseDamage);
     }
 
     /**
@@ -45,4 +44,7 @@ public abstract class Entity {
     }
 
     public abstract void processEvent(TileListener.TileEvent event, ArrayList<Object> actor);
+
+    public abstract void onTurnStart();
+    public abstract void onTurnEnd();
 }

@@ -12,10 +12,12 @@ public class EntityAttributes {
     public int atk;
     public int def;
     public int mp;
-    public int shield;
+
+    public int shield = 0;
+    public double offenseMult = 1.0;
+    public double defenseMult = 1.0;
 
     public boolean isDamageable;
-
     public TilePos pos;
 
     /**
@@ -32,7 +34,6 @@ public class EntityAttributes {
         this.pos = new TilePos(pos);
 
         this.isDamageable = true;
-        this.shield = 0;
     }
 
     /**

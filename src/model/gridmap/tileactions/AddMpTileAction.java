@@ -3,18 +3,18 @@ package model.gridmap.tileactions;
 import model.entities.Entity;
 import model.gridmap.Tile;
 
-public class DealDamageTileAction extends TileAction {
-    int baseDamage;
+public class AddMpTileAction extends TileAction {
+    int mpChange;
 
-    public DealDamageTileAction(int baseDamage) {
-        this.baseDamage = baseDamage;
+    public AddMpTileAction(int mpChange) {
+        this.mpChange = mpChange;
     }
 
     @Override
     public void applyAction(Tile tile) {
         Entity entity = tile.entity;
         if (entity != null) {
-            entity.takeDamage(baseDamage);
+            entity.updateMP(mpChange);
         }
     }
 }
