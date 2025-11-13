@@ -1,6 +1,6 @@
 package model.gridmap;
 
-import model.entities.Entity;
+import model.entities.ActionEntity;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ public class TileListener {
     /**
      * Entity to notify of the event when it occurs
      */
-    public Entity callback;
+    public ActionEntity callback;
 
     /**
      * Which event to listen for

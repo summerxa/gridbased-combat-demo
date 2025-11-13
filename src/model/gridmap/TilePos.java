@@ -1,10 +1,12 @@
 package model.gridmap;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Represents a position on the 8x8 grid.
  * I'm getting CritterWorld flashbacks.
+ * Also includes a ton of helpers that get different AOEs
  */
 public class TilePos {
     int row;
@@ -65,6 +67,58 @@ public class TilePos {
                 tiles.add(new TilePos(r, c));
             }
         }
+        return tiles;
+    }
+
+    public static ArrayList<TilePos> singleTile(TilePos center) {
+        return new ArrayList<>(Collections.singletonList(center));
+    }
+
+    public static ArrayList<TilePos> getBishopAOE(TilePos center, int size, boolean inclSelf) {
+        ArrayList<TilePos> tiles = new ArrayList<>();
+        for (int i = 1; i <= size; ++i) {
+            TilePos[] corners = new TilePos[] {
+                    new TilePos(center.row-i, center.col-i),
+                    new TilePos(center.row-i, center.col+i),
+                    new TilePos(center.row+i, center.col-i),
+                    new TilePos(center.row+i, center.col+i),
+            };
+            for (TilePos corner : corners) {
+                if (isInBounds(corner)) {
+                    tiles.add(corner);
+                }
+            }
+        }
+        if (inclSelf) {
+            tiles.add(center);
+        }
+        return tiles;
+    }
+
+    public static ArrayList<TilePos> getRookAOE(TilePos center, int size, boolean inclSelf) {
+        ArrayList<TilePos> tiles = new ArrayList<>();
+        for (int i = 1; i <= size; ++i) {
+            TilePos[] corners = new TilePos[] {
+                    new TilePos(center.row-i, center.col),
+                    new TilePos(center.row+i, center.col),
+                    new TilePos(center.row, center.col-i),
+                    new TilePos(center.row, center.col+i),
+            };
+            for (TilePos corner : corners) {
+                if (isInBounds(corner)) {
+                    tiles.add(corner);
+                }
+            }
+        }
+        if (inclSelf) {
+            tiles.add(center);
+        }
+        return tiles;
+    }
+
+    public static ArrayList<TilePos> getQueenAOE(TilePos center, int size, boolean inclSelf) {
+        ArrayList<TilePos> tiles = getRookAOE(center, size, inclSelf);
+        tiles.addAll(getBishopAOE(center, size, inclSelf));
         return tiles;
     }
 

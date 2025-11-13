@@ -23,14 +23,14 @@ public class EntityAttributes {
     /**
      * Create a regular entity
      */
-    public EntityAttributes(String name, char gridRep, int maxHp, int hp, int atk, int def, int mp, TilePos pos) {
+    public EntityAttributes(String name, char gridRep, int maxHp, int atk, int def, TilePos pos) {
         this.name = name;
         this.gridRep = gridRep;
         this.maxHP = maxHp;
-        this.hp = hp;
+        hp = maxHP;
         this.atk = atk;
         this.def = def;
-        this.mp = mp;
+        mp = 0;
         this.pos = new TilePos(pos);
 
         this.isDamageable = true;
@@ -49,12 +49,17 @@ public class EntityAttributes {
      */
     public EntityAttributes(EntityAttributes other) {
         this.name = other.name;
+        this.gridRep = other.gridRep;
         this.maxHP = other.maxHP;
         this.hp = other.hp;
         this.atk = other.atk;
         this.def = other.def;
         this.mp = other.mp;
+        this.shield = other.shield;
+        this.offenseMult = other.offenseMult;
+        this.defenseMult = other.defenseMult;
         this.isDamageable = other.isDamageable;
+        this.pos = new TilePos(other.pos);
     }
 
     public boolean isAlive() {

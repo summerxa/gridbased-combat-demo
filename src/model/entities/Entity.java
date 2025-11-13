@@ -12,7 +12,7 @@ public abstract class Entity {
 
     protected Entity(EntityAttributes baseAttributes) {
         this.baseAttributes = baseAttributes;
-        this.attributes = new EntityAttributes(baseAttributes);
+        attributes = new EntityAttributes(baseAttributes);
     }
 
     /**
@@ -20,8 +20,7 @@ public abstract class Entity {
      * @param baseDamage base damage before DEF and other modifiers applied
      */
     public void takeDamage(int baseDamage) {
-        // TODO incorporate DEF
-        attributes.hp -= MiscUtil.awayFromZero(attributes.defenseMult * baseDamage);
+        attributes.hp -= computeDefense(baseDamage);
     }
 
     /**
@@ -53,6 +52,19 @@ public abstract class Entity {
     public abstract void onTurnStart();
     public abstract void onTurnEnd();
 
-    public abstract void processEvent(TileListener.TileEvent event, ArrayList<Object> actor);
-    public abstract void processActionResult(UserInput.InputType action, ArrayList<EntityActionResult> results);
+    public int computeOffense(int input) {
+        // TODO add atk and other buffs
+        // also want to consider buffs that only affect healing/dmg/etc
+        // might need to pass in another argument representing whether input is a heal, damage, or status effect?
+        double updInput = attributes.offenseMult * input;
+        if (attributes.mp >= 0) {
+            return MiscUtil.awayFromZero(updInput * (100 + 2 * attributes.mp) / 100.0);
+        }
+        return MiscUtil.awayFromZero(updInput * (100 + attributes.mp) / 100.0);
+    }
+
+    public int computeDefense(int input) {
+        // TODO add def and other buffs
+        return MiscUtil.awayFromZero(attributes.defenseMult * input);
+    }
 }

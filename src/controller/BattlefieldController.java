@@ -55,12 +55,10 @@ public class BattlefieldController {
      * Assumes this is for user-provided input (i.e. SETUP is an invalid command type)
      */
     public boolean isValidCommandType(InputType input) {
-        if (currentState == BattlefieldState.ENEMY_TURN) {
+        if (currentState == BattlefieldState.ENEMY_TURN || input == InputType.QUIT) {
             return true;
         }
-        return input != InputType.INVALID;
-        // TODO uncomment this line (just for testing)
-//        return input != InputType.INVALID && allies.get(currentActor).isValidMove(input);
+        return input != InputType.INVALID && allies.get(currentActor).isValidMove(input);
     }
 
     private void incrActor(ArrayList entityList, ArrayList otherList, BattlefieldState switchToState) {

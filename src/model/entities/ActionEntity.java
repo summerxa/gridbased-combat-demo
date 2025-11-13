@@ -1,13 +1,16 @@
 package model.entities;
 
+import driver.UserInput;
 import model.Constants;
+import model.gridmap.TileListener;
 import util.MiscUtil;
+
+import java.util.ArrayList;
 
 /**
  * An entity that can take action (i.e. an Ally or Enemy)
  */
 public abstract class ActionEntity extends Entity {
-
     protected ActionEntity(EntityAttributes baseAttributes) {
         super(baseAttributes);
     }
@@ -17,6 +20,18 @@ public abstract class ActionEntity extends Entity {
     public void onHpChanged(double coeff, int amount, double multiplier, double denom_additive) {
         double mp_change = coeff * multiplier * amount / (attributes.maxHP + denom_additive);
         updateMP(MiscUtil.awayFromZero(mp_change));
+    }
+
+
+    // optional, override if needed
+    public void processEvent(TileListener.TileEvent event, ArrayList<Object> actor) {
+
+    }
+
+    public abstract void performAndProcessAction(UserInput.InputType move, ArrayList<EntityActionResult> results);
+
+    protected void processActionResult(UserInput.InputType action, ArrayList<EntityActionResult> results) {
+
     }
 
     /**
@@ -34,6 +49,4 @@ public abstract class ActionEntity extends Entity {
     public void onTeammateDowned() {
         updateMP(-Constants.ENTITY_TEAMMATE_DOWNED_MP_LOSS);
     }
-
-    public abstract void act();
 }

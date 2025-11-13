@@ -4,6 +4,7 @@ import driver.UserInput.InputType;
 import model.Constants;
 import model.gridmap.TilePos;
 import model.gridmap.tileactions.AddMpTileAction;
+import model.gridmap.tileactions.DealDamageTileAction;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,16 +13,35 @@ import java.util.Collections;
  * Represents a playable ally unit.
  */
 public abstract class Ally extends ActionEntity {
+    protected int lifeThreshold;
+    protected int deathThreshold;
+
+    protected int[] skillTimer = new int[] {0,0};
+    /**
+     * Equal to the cooldown of the corresponding skill PLUS ONE
+     */
+    protected int[] skillCD = new int[] {1,1};
+    /**
+     * Equal to the MP change from using the corresponding skill
+     */
+    protected int[] skillMP = new int[] {0,0};
+
     protected Ally(EntityAttributes baseAttributes) {
         super(baseAttributes);
     }
 
     /**
-     * Basic impl that just checks if skills are off cooldown.
+     * Basic impl that just checks if skills are usable (off cooldown and within MP threshold)
      * i.e. ignores whether there are actually valid target-able entities within range
      */
     public boolean isValidMove(InputType move) {
-        // TODO check for cooldowns and available targets and stuff
+        if (move == InputType.ULTIMATE) {
+            return attributes.mp <= deathThreshold || attributes.mp >= lifeThreshold;
+        } else if (move == InputType.MP_AOE) {
+            return Math.abs(attributes.mp) >= Constants.ALLY_MP_AOE_THRESHOLD;
+        } else if (move == InputType.SKILL1 || move == InputType.SKILL2) {
+            return skillTimer[move == InputType.SKILL1 ? 0 : 1] == 0;
+        }
         return move == InputType.BASIC_ATK || move == InputType.FORFEIT || move == InputType.MOVEMENT;
     }
 
@@ -34,7 +54,7 @@ public abstract class Ally extends ActionEntity {
             case MOVEMENT -> moveRange();
             case SKILL1 -> skill1Range();
             case SKILL2 -> skill2Range();
-            case ULTIMATE -> ultimateRange();
+            case ULTIMATE -> ultRange();
             case MP_AOE -> new ArrayList<>(Collections.singletonList(attributes.pos));
             default -> new ArrayList<>();
         };
@@ -46,7 +66,7 @@ public abstract class Ally extends ActionEntity {
     public abstract ArrayList<TilePos> skill1Range();
     public abstract ArrayList<TilePos> skill2Range();
 
-    public ArrayList<TilePos> ultimateRange() {
+    public ArrayList<TilePos> ultRange() {
         return (attributes.mp > 0) ? lifeUltRange() : deathUltRange();
     }
 
@@ -61,7 +81,7 @@ public abstract class Ally extends ActionEntity {
             case BASIC_ATK -> basicAtkAction(pos);
             case SKILL1 -> skill1Action(pos);
             case SKILL2 -> skill2Action(pos);
-            case ULTIMATE -> ultimateAction(pos);
+            case ULTIMATE -> ultAction(pos);
             case MP_AOE -> mpAoeAction();
             default -> null; // hopefully this case never happens
         };
@@ -69,11 +89,15 @@ public abstract class Ally extends ActionEntity {
 
     // these methods don't *perform* the action
     // only return a list of which tiles will be affected by a skill use at the selected location "pos"
-    public abstract EntityActionChanges basicAtkAction(TilePos pos);
+    public EntityActionChanges basicAtkAction(TilePos pos) {
+        EntityActionChanges actions = new EntityActionChanges();
+        actions.addAction(pos, new DealDamageTileAction(Constants.ALLY_BASIC_ATK_DMG));
+        return actions;
+    }
     public abstract EntityActionChanges skill1Action(TilePos pos);
     public abstract EntityActionChanges skill2Action(TilePos pos);
 
-    public EntityActionChanges ultimateAction(TilePos pos) {
+    public EntityActionChanges ultAction(TilePos pos) {
         return (attributes.mp > 0) ? lifeUltAction(pos) : deathUltAction(pos);
     }
 
@@ -93,5 +117,30 @@ public abstract class Ally extends ActionEntity {
                     coeff * level * Constants.ALLY_MP_AOE_PERLEVEL_MULTIPLIER));
         }
         return result;
+    }
+
+    public void performAndProcessAction(InputType move, ArrayList<EntityActionResult> results) {
+        if (move == InputType.SKILL1) {
+            skillTimer[0] = skillCD[0];
+            attributes.mp += skillMP[0];
+        } else if (move == InputType.SKILL2) {
+            skillTimer[1] = skillCD[1];
+            attributes.mp += skillMP[1];
+        } else if (move == InputType.ULTIMATE) {
+            attributes.mp = 0;
+        }
+        // TODO if needed, add MP change from basic atk, movement, forfeit
+        processActionResult(move, results);
+    }
+
+    public void onTurnStart() {
+        // TODO trigger status effects and decrement their timers
+    }
+
+    public void onTurnEnd() {
+        // decrement skill cooldowns
+        for (int i = 0; i < 2; ++i)
+            if (skillTimer[i] > 0)
+                --skillTimer[i];
     }
 }

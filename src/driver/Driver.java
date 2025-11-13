@@ -1,7 +1,7 @@
 package driver;
 
 import controller.BattlefieldController;
-import controller.GridBuilder;
+import controller.LevelBuilder;
 
 /**
  * Driver for gameplay loop
@@ -11,7 +11,7 @@ public class Driver {
         UserInputReader reader = new UserInputReader();
         UserInput input;
 
-        BattlefieldController.instance.grid = GridBuilder.initTutorialDummy();
+        LevelBuilder.initTutorialDummy();
 
         do {
             BattlefieldController.instance.printState();
