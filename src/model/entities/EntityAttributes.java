@@ -6,7 +6,7 @@ public class EntityAttributes {
     public static final int MAX_MP = 50;
 
     public String name;
-    public char printRep;
+    public char gridRep;
     public int maxHP;
     public int hp;
     public int atk;
@@ -23,9 +23,9 @@ public class EntityAttributes {
     /**
      * Create a regular entity
      */
-    public EntityAttributes(String name, char printRep, int maxHp, int hp, int atk, int def, int mp, TilePos pos) {
+    public EntityAttributes(String name, char gridRep, int maxHp, int hp, int atk, int def, int mp, TilePos pos) {
         this.name = name;
-        this.printRep = printRep;
+        this.gridRep = gridRep;
         this.maxHP = maxHp;
         this.hp = hp;
         this.atk = atk;
@@ -55,5 +55,9 @@ public class EntityAttributes {
         this.def = other.def;
         this.mp = other.mp;
         this.isDamageable = other.isDamageable;
+    }
+
+    public boolean isAlive() {
+        return hp > 0;
     }
 }

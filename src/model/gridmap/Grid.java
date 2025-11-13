@@ -17,4 +17,8 @@ public class Grid {
     public void placeEntity(Entity entity, TilePos pos) {
         grid[pos.row][pos.col].entity = entity;
     }
+
+    public Tile get(int row, int col) {
+        return grid[row][col];
+    }
 }

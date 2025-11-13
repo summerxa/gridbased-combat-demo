@@ -7,4 +7,12 @@ public class Tile {
     public Entity entity = null;
 
     // TODO add listeners and stuff i guess...
+
+    public String toString() {
+        if (entity == null) {
+            return ".";
+        } else {
+            return entity.toGridString();
+        }
+    }
 }

@@ -1,7 +1,7 @@
 package model.entities;
 
+import driver.UserInput;
 import model.gridmap.TileListener;
-import model.gridmap.TilePos;
 import util.MiscUtil;
 
 import java.util.ArrayList;
@@ -29,7 +29,10 @@ public abstract class Entity {
      * @param healAmount amount to regen before modifiers applied
      */
     public void heal(int healAmount) {
-        attributes.hp += healAmount;
+        // sadly we cannot do necromancy and revive dead entities
+        if (attributes.isAlive()) {
+            attributes.hp += healAmount;
+        }
     }
 
     /**
@@ -40,11 +43,16 @@ public abstract class Entity {
     }
 
     public String toString() {
-        return Character.toString(attributes.printRep);
+        return attributes.name;
     }
 
-    public abstract void processEvent(TileListener.TileEvent event, ArrayList<Object> actor);
+    public String toGridString() {
+        return Character.toString(attributes.gridRep);
+    }
 
     public abstract void onTurnStart();
     public abstract void onTurnEnd();
+
+    public abstract void processEvent(TileListener.TileEvent event, ArrayList<Object> actor);
+    public abstract void processActionResult(UserInput.InputType action, ArrayList<EntityActionResult> results);
 }
